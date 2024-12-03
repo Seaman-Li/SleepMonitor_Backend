@@ -3,6 +3,8 @@ package com.example.sleepmonitor_backend.Service;
 import com.example.sleepmonitor_backend.Model.User;
 import com.example.sleepmonitor_backend.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,8 +17,11 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     //保存用户，用于用户创建
-    public User saveUser(User user) {
+    public User createUser(User user) {
         //查重
         if (userRepository.existsByEmail(user.getEmail())) {
             throw new IllegalArgumentException("Email already in use");
@@ -27,13 +32,26 @@ public class UserService {
         if(userRepository.existsByPhone(user.getPhone())){
             throw new IllegalArgumentException("Phone already in use");
         }
+        // 加密用户的密码
+        String encryptedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encryptedPassword);  // 设置加密后的密码
 
         return userRepository.save(user);
     }
 
+    public User validateLogin(String username, String password) {
+        Optional<User> optionalUser = userRepository.findByUsername(username);
+        // Check if the user exists, the password matches, and the user is valid (isValid is true)
+        if (optionalUser.isPresent() && optionalUser.get().getIsValid() && passwordEncoder.matches(password, optionalUser.get().getPassword())) {
+            return optionalUser.get();
+        }
+        return null;
+    }
+
+
     //通过userID获取未被删除的用户
     public User getUserById_IsValidTrue(Long userId) {
-        return Optional.ofNullable(userRepository.findByUserId_IsValidTrue(userId))
+        return userRepository.findByUserId_IsValidTrue(userId)
                 .orElseThrow(() -> new RuntimeException("User not found or not valid"));
     }
 
@@ -64,15 +82,20 @@ public class UserService {
         User existingUser = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + userId));
 
-        // 选择性更新属性
+        // 更新密码时需要加密
+        if (user.getPassword() != null && !user.getPassword().isEmpty()) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+
+        // 更新其他信息
         Optional.ofNullable(user.getUsername()).ifPresent(existingUser::setUsername);
-        Optional.ofNullable(user.getPassword()).ifPresent(existingUser::setPassword);
         Optional.ofNullable(user.getEmail()).ifPresent(existingUser::setEmail);
         Optional.ofNullable(user.getPhone()).ifPresent(existingUser::setPhone);
         Optional.ofNullable(user.getAddress()).ifPresent(existingUser::setAddress);
 
         return userRepository.save(existingUser);
     }
+
 
     //更新is_Valid,把已删除状态变成可用状态
     public void updateUserValidity(Long userId, boolean isValid) {

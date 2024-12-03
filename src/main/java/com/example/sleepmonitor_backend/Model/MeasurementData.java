@@ -11,7 +11,7 @@ public class MeasurementData {
     private Long measurementId;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Column(name = "session_time", updatable = false)
@@ -25,20 +25,26 @@ public class MeasurementData {
         }
     }
 
-    @Lob
-    private byte[] ecgSamples;
+    @Column(name = "ecg_samples", columnDefinition = "json")
+    private String ecgSamples;
 
-    @Lob
-    private byte[] ppgSamples;
+    @Column(name = "ppg_samples", columnDefinition = "json")
+    private String ppgSamples;
 
-    @Column(name = "heart_rate")
-    private Integer heartRate;
+    @Column(name = "ecg_filtered_samples", columnDefinition = "json")
+    private String ecgFilteredSamples;
 
-    @Column(name = "blood_pressure")
-    private Integer bloodPressure;
+    @Column(name = "ppg_filtered_samples", columnDefinition = "json")
+    private String ppgFilteredSamples;
 
-    @Column(name = "is_valid")
-    private Boolean isValid;
+    @Column(name = "hr_samples", columnDefinition = "json")
+    private String hrSamples;
+
+    @Column(name = "ptt_samples", columnDefinition = "json")
+    private String pttSamples;
+
+    @Column(name = "is_valid", nullable = false, columnDefinition = "TINYINT(1) DEFAULT 1")
+    private Boolean isValid = true;
 
     public Long getMeasurementId() {
         return measurementId;
@@ -54,32 +60,28 @@ public class MeasurementData {
 //        this.sessionTime = sessionTime;
 //    }
 
-    public byte[] getEcgSamples() {
-        return ecgSamples;
-    }
+    public String getEcgSamples() {return ecgSamples;}
 //    public void setEcgSamples(byte[] ecgSamples) {
 //        this.ecgSamples = ecgSamples;
 //    }
 
-    public byte[] getPpgSamples() {
-        return ppgSamples;
-    }
+    public String getPpgSamples() {return ppgSamples;}
 //    public void setPpgSamples(byte[] ppgSamples) {
 //        this.ppgSamples = ppgSamples;
 //    }
 
-    public Integer getHeartRate() {
-        return heartRate;
-    }
-//    public void setHeartRate(Integer heartRate) {
-//        this.heartRate = heartRate;
-//    }
+    public String getEcgFilteredSamples() {return ecgFilteredSamples;}
 
-    public Integer getBloodPressure() {
-        return bloodPressure;
-    }
-//    public void setBloodPressure(Integer bloodPressure) {
-//        this.bloodPressure = bloodPressure;
-//    }
+    public String getPpgFilteredSamples() {return ppgFilteredSamples;}
 
+    public String getHrSamples() {return hrSamples;}
+
+    public String getPttSamples() {return pttSamples;}
+
+    public Boolean getIsValid() {
+        return isValid;
+    }
+    public void setIsValid(Boolean isValid) {
+        this.isValid = isValid;
+    }
 }

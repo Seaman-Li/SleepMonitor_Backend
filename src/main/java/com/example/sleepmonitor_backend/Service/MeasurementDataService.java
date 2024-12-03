@@ -17,13 +17,18 @@ public class MeasurementDataService {
         return measurementDataRepository.save(measurementData);
     }
 
-    public MeasurementData getMeasurementDataById(Long measurementId) {
-        return measurementDataRepository.findById(measurementId).orElseThrow(() -> new RuntimeException("Measurement data not found"));
-    }
+//    public List<MeasurementData> getValidMeasurementDataByUserId(Long userId) {
+//        return measurementDataRepository.findByUserIdAndIsValid(userId, true);
+//    }
+//
+//    public List<MeasurementData> getAllMeasurementDataByUserId(Long userId) {
+//        return measurementDataRepository.findByUserId(userId);
+//    }
 
     public List<MeasurementData> getAllMeasurementData() {
         return measurementDataRepository.findAll();
     }
+
 
     public void deleteMeasurementData(Long measurementId) {
         measurementDataRepository.deleteById(measurementId);

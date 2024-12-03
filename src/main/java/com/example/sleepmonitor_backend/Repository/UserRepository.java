@@ -9,20 +9,19 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
     // 查询考虑is_valid标记的方法
     @Query("SELECT u FROM User u WHERE u.username = ?1 AND u.isValid = true")
-    User findByUsername_IsValidTrue(String username);
+    Optional<User> findByUsername_IsValidTrue(String username);
 
     @Query("SELECT u FROM User u WHERE u.userId = ?1 AND u.isValid = true")
-    User findByUserId_IsValidTrue(Long userId);
-
+    Optional<User> findByUserId_IsValidTrue(Long userId);
 
     // 查询已删除用户
     @Query("SELECT u FROM User u WHERE u.userId = ?1 AND u.isValid = false")
     Optional<User> findDeletedById(Long userId);
 
     // 根据username查找用户
-    User findByUsername(String username);
+    Optional<User> findByUsername(String username);
 
-    User findByUserId(Long userId);
+    Optional<User> findByUserId(Long userId);
 
     // 检查用户名是否已存在
     boolean existsByUsername(String username);
