@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class JwtUtil {
-    // Provide a default secret key if not set in properties
+    // Provide a default secret key
     @Value("${jwt.secret:defaultSecretKey_AttackTheDPoint}")
     private String secretKey;
 

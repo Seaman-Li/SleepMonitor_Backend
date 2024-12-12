@@ -14,12 +14,16 @@ public class UserHealthService {
     @Autowired
     private UserHealthRepository userHealthRepository;
 
-    public UserHealth saveUserHealth(UserHealth userHealth) {
+    public UserHealth createUserHealth(UserHealth userHealth) {
         return userHealthRepository.save(userHealth);
     }
 
     public UserHealth getUserHealthById(Long healthId) {
         return userHealthRepository.findById(healthId).orElseThrow(() -> new RuntimeException("User health record not found"));
+    }
+
+    public Optional<UserHealth> getUserHealthByUserId(Long userId) {
+        return userHealthRepository.findByUserId(userId);
     }
 
     public List<UserHealth> getAllUserHealthRecords() {
@@ -31,9 +35,9 @@ public class UserHealthService {
     }
 
     // 更新健康记录
-    public UserHealth updateUserHealth(UserHealth userHealth) {
-        UserHealth existingUserHealth = userHealthRepository.findById(userHealth.getHealthId())
-                .orElseThrow(() -> new IllegalArgumentException("Health record not found with ID: " + userHealth.getHealthId()));
+    public UserHealth updateUserHealth(Long userId, UserHealth userHealth) {
+        UserHealth existingUserHealth = userHealthRepository.findByUserId(userId)
+                .orElseThrow(() -> new IllegalArgumentException("Health record not found with userID: " + userId));
 
         // Update fields, but check for null to avoid overwriting with null values
         if (userHealth.getGender() != null) existingUserHealth.setGender(userHealth.getGender());
@@ -43,5 +47,13 @@ public class UserHealthService {
         if (userHealth.getBloodType() != null) existingUserHealth.setBloodType(userHealth.getBloodType());
 
         return userHealthRepository.save(existingUserHealth);
+    }
+
+    public List<UserHealth> getAllUserHealth() {
+        return userHealthRepository.findAll();
+    }
+
+    public List<UserHealth> getActiveUserHealth() {
+        return userHealthRepository.findByIsValidTrue();
     }
 }

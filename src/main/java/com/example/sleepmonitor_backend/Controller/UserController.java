@@ -104,6 +104,21 @@ public class UserController {
 //        }
 //    }
 
+    // Endpoint to validate JWT
+    @GetMapping("/validateToken")
+    public ResponseEntity<?> validateToken(@RequestHeader("Authorization") String authHeader) {
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            String token = authHeader.substring(7);
+            try {
+                jwtUtil.validateTokenAndGetUserId(token);  // This will throw if invalid
+                return ResponseEntity.ok().build();  // Token is valid
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid or expired JWT token");
+            }
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bearer token not found");
+    }
+
 
 
     @PostMapping("/login")

@@ -19,9 +19,11 @@ public class UserHealth {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long healthId;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @OneToOne
+    @JoinColumn(name = "user_id" , nullable = false)
     private User user;
+    @Transient  // 表明 userId 不是数据库字段
+    private Long userId;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;  // Gender could be an enum with values MALE, FEMALE, OTHER
@@ -50,6 +52,21 @@ public class UserHealth {
             createdAt = new Date();
         }
     }
+
+    public Long getUserId() {
+        if (user != null) {
+            return user.getUserId();
+        }
+        return userId;
+    }
+    public void setUserId(Long userId) {
+        if (this.user == null) {
+            this.user = new User();  // 在这里初始化 user 对象
+        }
+        this.user.setUserId(userId);
+        this.userId = userId;
+    }
+    public void setUser(User user) {this.user = user;}
 
     public Long getHealthId() {
         return healthId;

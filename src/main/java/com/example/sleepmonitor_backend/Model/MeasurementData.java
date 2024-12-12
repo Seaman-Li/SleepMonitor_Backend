@@ -11,8 +11,10 @@ public class MeasurementData {
     private Long measurementId;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id" , nullable = false)
     private User user;
+    @Transient  // 表明 userId 不是数据库字段
+    private Long userId;
 
     @Column(name = "session_time", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -49,34 +51,66 @@ public class MeasurementData {
     public Long getMeasurementId() {
         return measurementId;
     }
-//    public void setMeasurementId(Long measurementId) {
-//        this.measurementId = measurementId;
-//    }
+    public void setMeasurementId(Long measurementId) {
+        this.measurementId = measurementId;
+    }
+
+
+    public Long getUserId() {
+        if (user != null) {
+            return user.getUserId();
+        }
+        return userId;
+    }
+    public void setUserId(Long userId) {
+        if (this.user == null) {
+            this.user = new User();  // 在这里初始化 user 对象
+        }
+        this.user.setUserId(userId);
+        this.userId = userId;
+    }
+    public void setUser(User user) {this.user = user;}
 
     public Date getSessionTime() {
         return sessionTime;
     }
-//    public void setSessionTime(Date sessionTime) {
-//        this.sessionTime = sessionTime;
-//    }
+    public void setSessionTime(Date sessionTime) {
+        this.sessionTime = sessionTime;
+    }
 
     public String getEcgSamples() {return ecgSamples;}
-//    public void setEcgSamples(byte[] ecgSamples) {
-//        this.ecgSamples = ecgSamples;
-//    }
+    public void setEcgSamples(String ecgSamples) {
+        this.ecgSamples = ecgSamples;
+    }
 
     public String getPpgSamples() {return ppgSamples;}
-//    public void setPpgSamples(byte[] ppgSamples) {
-//        this.ppgSamples = ppgSamples;
-//    }
+    public void setPpgSamples(String ppgSamples) {
+        this.ppgSamples = ppgSamples;
+    }
 
-    public String getEcgFilteredSamples() {return ecgFilteredSamples;}
+    public String getEcgFilteredSamples() {
+        return ecgFilteredSamples;
+    }
+    public void setEcgFilteredSamples(String ecgFilteredSamples) {
+        this.ecgFilteredSamples = ecgFilteredSamples;
+    }
 
-    public String getPpgFilteredSamples() {return ppgFilteredSamples;}
+    public String getPpgFilteredSamples() {
+        return ppgFilteredSamples;
+    }
+    public void setPpgFilteredSamples(String ppgFilteredSamples) {
+        this.ppgFilteredSamples = ppgFilteredSamples;
+    }
 
     public String getHrSamples() {return hrSamples;}
+    public void setHrSamples(String hrSamples) {
+        this.hrSamples = hrSamples;
+    }
 
     public String getPttSamples() {return pttSamples;}
+    public void setPttSamples(String pttSamples) {
+        this.pttSamples = pttSamples;
+    }
 
     public Boolean getIsValid() {
         return isValid;
