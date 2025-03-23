@@ -1,4 +1,4 @@
-package com.example.sleepmonitor_backend.dto;
+package com.sleepMonitor_backend.dto;
 
 import java.util.Date;
 

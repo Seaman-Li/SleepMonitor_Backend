@@ -1,6 +1,6 @@
-package com.example.sleepmonitor_backend.Repository;
+package com.sleepMonitor_backend.Repository;
 
-import com.example.sleepmonitor_backend.Model.User;
+import com.sleepMonitor_backend.Model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

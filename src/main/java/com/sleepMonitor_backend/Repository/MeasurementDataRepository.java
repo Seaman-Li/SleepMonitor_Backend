@@ -1,8 +1,8 @@
-package com.example.sleepmonitor_backend.Repository;
+package com.sleepMonitor_backend.Repository;
 
-import com.example.sleepmonitor_backend.Model.MeasurementData;
-import com.example.sleepmonitor_backend.Model.User;
-import com.example.sleepmonitor_backend.dto.MeasurementDataSummary;
+import com.sleepMonitor_backend.Model.MeasurementData;
+import com.sleepMonitor_backend.Model.User;
+import com.sleepMonitor_backend.dto.MeasurementDataSummary;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public interface MeasurementDataRepository extends JpaRepository<MeasurementData
     public interface UserRepository extends JpaRepository<User, Long> {
     }
 
-    @Query("SELECT new com.example.sleepmonitor_backend.dto.MeasurementDataSummary(md.measurementId, md.user.userId, md.sessionTime) FROM MeasurementData md WHERE md.user.userId = :userId AND md.isValid = true")
+    @Query("SELECT new com.sleepMonitor_backend.dto.MeasurementDataSummary(md.measurementId, md.user.userId, md.sessionTime) FROM MeasurementData md WHERE md.user.userId = :userId AND md.isValid = true")
     List<MeasurementDataSummary> findAllValidMeasurementsByUserId(@Param("userId") Long userId);
 
 }

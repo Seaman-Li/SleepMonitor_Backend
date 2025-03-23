@@ -1,10 +1,10 @@
-package com.example.sleepmonitor_backend.Service;
+package com.sleepMonitor_backend.Service;
 
-import com.example.sleepmonitor_backend.Model.MeasurementData;
-import com.example.sleepmonitor_backend.Model.User;
-import com.example.sleepmonitor_backend.Repository.MeasurementDataRepository;
-import com.example.sleepmonitor_backend.Repository.UserRepository;
-import com.example.sleepmonitor_backend.dto.MeasurementDataSummary;
+import com.sleepMonitor_backend.Model.MeasurementData;
+import com.sleepMonitor_backend.Model.User;
+import com.sleepMonitor_backend.Repository.MeasurementDataRepository;
+import com.sleepMonitor_backend.Repository.UserRepository;
+import com.sleepMonitor_backend.dto.MeasurementDataSummary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

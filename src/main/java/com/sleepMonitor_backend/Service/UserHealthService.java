@@ -1,7 +1,7 @@
-package com.example.sleepmonitor_backend.Service;
+package com.sleepMonitor_backend.Service;
 
-import com.example.sleepmonitor_backend.Model.UserHealth;
-import com.example.sleepmonitor_backend.Repository.UserHealthRepository;
+import com.sleepMonitor_backend.Model.UserHealth;
+import com.sleepMonitor_backend.Repository.UserHealthRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

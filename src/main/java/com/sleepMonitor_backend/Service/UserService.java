@@ -1,12 +1,12 @@
-package com.example.sleepmonitor_backend.Service;
+package com.sleepMonitor_backend.Service;
 
-import com.example.sleepmonitor_backend.Model.User;
-import com.example.sleepmonitor_backend.Repository.UserRepository;
+import com.sleepMonitor_backend.Model.User;
+import com.sleepMonitor_backend.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
+import com.sleepMonitor_backend.Utils.JwtUtil;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +19,9 @@ public class UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     //保存用户，用于用户创建
     public User createUser(User user) {
@@ -103,5 +106,29 @@ public class UserService {
                 .orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + userId));
         user.setIsValid(isValid);
         userRepository.save(user);
+    }
+
+    // Validate and return current user using JWT token
+    public User getCurrentUser(String token) {
+        String userId = jwtUtil.validateTokenAndGetUserId(token);
+        User user = getUserById(Long.parseLong(userId));
+        user.setPassword(null); // Hide password
+        return user;
+    }
+
+
+    // Validate JWT token only
+    public boolean isTokenValid(String token) {
+        jwtUtil.validateTokenAndGetUserId(token);  // Throws if invalid
+        return true;
+    }
+
+    // Login and return token
+    public String loginAndGenerateToken(String username, String password) {
+        User user = validateLogin(username, password);
+        if (user == null) {
+            throw new IllegalArgumentException("Invalid credentials");
+        }
+        return jwtUtil.generateToken(user.getUserId().toString());
     }
 }

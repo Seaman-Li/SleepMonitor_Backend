@@ -1,14 +1,12 @@
-package com.example.sleepmonitor_backend.Controller;
+package com.sleepMonitor_backend.Controller;
 
-import com.example.sleepmonitor_backend.Model.User;
-import com.example.sleepmonitor_backend.Repository.MeasurementDataRepository;
-import com.example.sleepmonitor_backend.Repository.UserRepository;
-import com.example.sleepmonitor_backend.dto.MeasurementDataSummary;
+import com.sleepMonitor_backend.dto.MeasurementDataSummary;
+import com.sleepMonitor_backend.Service.MeasurementDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.example.sleepmonitor_backend.Model.MeasurementData;
-import com.example.sleepmonitor_backend.Service.MeasurementDataService;
+import com.sleepMonitor_backend.Model.MeasurementData;
+
 import java.util.List;
 
 

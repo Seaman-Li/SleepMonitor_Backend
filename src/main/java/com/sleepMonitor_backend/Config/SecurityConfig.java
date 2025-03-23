@@ -1,7 +1,7 @@
-package com.example.sleepmonitor_backend.Config;
+package com.sleepMonitor_backend.Config;
 
 
-import com.example.sleepmonitor_backend.Utils.JwtUtil;
+import com.sleepMonitor_backend.Utils.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -32,22 +33,10 @@ public class SecurityConfig {
     @Autowired
     private JwtUtil jwtUtil;
 
-//    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//        http
-//                .csrf(csrf -> csrf.disable())
-//                .authorizeHttpRequests(authz -> authz
-//                        .requestMatchers("/api/**").permitAll()  // 允许未认证访问 /api/users/** 开发阶段不希望任何api被security拦截
-////                        .requestMatchers("/api/measurement/**").permitAll()
-//                        .anyRequest().authenticated())  // 其他所有请求需要认证
-//                .httpBasic(httpBasic -> httpBasic.realmName("VVV")); // 如果不需要HTTP基础认证，可以考虑移除
-//
-//        return http.build();
-//    }
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .cors(Customizer.withDefaults()) // enable CORS
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/api/**", "/api/register").permitAll()

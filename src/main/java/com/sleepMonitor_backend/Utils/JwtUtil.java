@@ -1,4 +1,4 @@
-package com.example.sleepmonitor_backend.Utils;
+package com.sleepMonitor_backend.Utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -51,29 +51,5 @@ public class JwtUtil {
         }
     }
 
-//    public String validateTokenAndGetUserId(String token) {
-//        try {
-//            SecretKey key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
-//
-//            Claims claims = Jwts.parser()
-//                    .verifyWith(key)
-//                    .build()
-//                    .parseSignedClaims(token)
-//                    .getPayload();
-//
-//            // Additional logging
-//            System.out.println("Token Subject: " + claims.getSubject());
-//            System.out.println("Token Expiration: " + claims.getExpiration());
-//
-//            // Check expiration
-//            if (claims.getExpiration().before(new Date())) {
-//                throw new ExpiredJwtException(null, claims, "Token expired");
-//            }
-//
-//            return claims.getSubject();
-//        } catch (Exception e) {
-//            System.err.println("Token Validation Error: " + e.getMessage());
-//            throw new RuntimeException("Invalid token", e);
-//        }
-//    }
+
 }

@@ -1,4 +1,4 @@
-package com.example.sleepmonitor_backend.Model;
+package com.sleepMonitor_backend.Model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;

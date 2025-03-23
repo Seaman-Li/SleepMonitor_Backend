@@ -1,7 +1,7 @@
-package com.example.sleepmonitor_backend.Controller;
+package com.sleepMonitor_backend.Controller;
 
-import com.example.sleepmonitor_backend.Model.UserHealth;
-import com.example.sleepmonitor_backend.Service.UserHealthService;
+import com.sleepMonitor_backend.Model.UserHealth;
+import com.sleepMonitor_backend.Service.UserHealthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
